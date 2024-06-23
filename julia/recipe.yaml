@@ -1,0 +1,30 @@
+context:
+  version: 1.10.4
+
+package:
+  name: julia
+  version: ${{ version }}
+
+source:
+  - if: osx and arm64
+    then:
+      - url: https://julialang-s3.julialang.org/bin/mac/aarch64/1.10/julia-${{ version }}-macaarch64.tar.gz
+        sha256: 97b88d7f9b5724118769f3a3bd259f8f7ada48cdecf3d584cf68162dd873dd10
+
+build:
+  script:
+    - cp -r $SRC_DIR/* $PREFIX/
+    - rm -rf $PREFIX/LICENSE.md
+  dynamic_linking:
+    binary_relocation: false
+
+tests:
+  - script:
+      - julia -e 'println("Hello, world!")'
+      - julia --help
+
+about:
+  homepage: https://julialang.org/
+  license: MIT
+  summary: Julia is a high-level, high-performance dynamic programming language for technical computing.
+  license_file: LICENSE.md
