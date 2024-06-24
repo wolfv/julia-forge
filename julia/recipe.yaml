@@ -10,11 +10,38 @@ source:
     then:
       - url: https://julialang-s3.julialang.org/bin/mac/aarch64/1.10/julia-${{ version }}-macaarch64.tar.gz
         sha256: 97b88d7f9b5724118769f3a3bd259f8f7ada48cdecf3d584cf68162dd873dd10
+  - if: osx and x86_64
+    then:
+      - url: https://julialang-s3.julialang.org/bin/mac/x64/1.10/julia-${{ version }}-mac64.tar.gz
+        sha256: 259c18a5294dd41cc60117ecb9fc5a8b2f659807284903a65439fb9d3818c763
+  - if: linux and aarch64
+    then:
+      - url: https://julialang-s3.julialang.org/bin/linux/aarch64/1.10/julia-${{ version }}-linux-aarch64.tar.gz
+        sha256: ae4ae6ade84a103cdf30ce91c8d4035a0ef51c3e2e66f90a0c13abeb4e100fc4
+  - if: linux and ppc64le
+    then:
+      - url: https://julialang-s3.julialang.org/bin/linux/ppc64le/1.10/julia-${{ version }}-linux-ppc64le.tar.gz
+        sha256: 0703f983894974491715e816a006e0f063966544023f470c94c71ef99dff9dba
+  - if: linux and x86_64
+    then:
+      - url: https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-${{ version }}-linux-x86_64.tar.gz
+        sha256: 079f61757c3b5b40d2ade052b3cc4816f50f7ef6df668825772562b3746adff1
+  - if: win and x86_64
+    then:
+      - url: https://julialang-s3.julialang.org/bin/winnt/x64/1.10/julia-${{ version }}-win64.tar.gz
+        sha256: c69ef4fdec5b45d02c18c2296422ebae7716534a86beb5b7e394fc1477f15e24
 
 build:
   script:
-    - cp -r $SRC_DIR/* $PREFIX/
-    - rm -rf $PREFIX/LICENSE.md
+    - if: unix
+      then:
+        - cp -r $SRC_DIR/* $PREFIX/
+        - rm -rf $PREFIX/LICENSE.md
+    - if: win
+      then:
+        - robocopy %SRC_DIR% %LIBRARY_PREFIX% /E
+        - del /F /Q %LIBRARY_PREFIX%\LICENSE.md
+
   dynamic_linking:
     binary_relocation: false
 
