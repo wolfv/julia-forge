@@ -13,7 +13,6 @@ import argparse
 import json
 import os
 import re
-import sys
 import urllib.request
 
 DEFAULT_SERVER = "https://julialang-s3.julialang.org"
@@ -88,7 +87,9 @@ def update_source_block(text, selector, url, sha256):
         lambda m: m.group(1) + url + m.group(3) + sha256, text, count=1
     )
     if count != 1:
-        raise SystemExit(f"Could not find a source block for selector '{selector}' to update.")
+        raise SystemExit(
+            f"Could not find a source block for selector '{selector}' to update."
+        )
     return new_text
 
 
