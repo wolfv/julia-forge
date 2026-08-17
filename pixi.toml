@@ -1,4 +1,4 @@
-[project]
+[workspace]
 name = "julia-forge"
 version = "0.1.0"
 description = "Automation to build a julia package(s) for julia-forge"
