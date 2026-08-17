@@ -34,8 +34,8 @@ PLATFORM_TRIPLETS = {
 REFERENCE_TARGET = "x86_64-unknown-linux-gnu"
 
 # Tier 3 platforms: upstream doesn't reliably publish a build for every
-# point release, so a missing archive here is not fatal -- the selector's
-# existing source block is left untouched instead of aborting the run.
+# point release. If an archive is missing, drop that platform from the recipe
+# instead of retaining a source block for an older, mismatched Julia version.
 OPTIONAL_SELECTORS = {"linux and ppc64le"}
 
 
@@ -105,6 +105,20 @@ def update_version(text, version):
     return new_text
 
 
+def remove_source_block(text, selector):
+    pattern = re.compile(
+        r"^\s*- if:\s*" + re.escape(selector) + r"\s*\n"
+        r"\s*then:\s*\n"
+        r"\s*- url:\s*[^\n]+\n"
+        r"\s*sha256:\s*[^\n]+\n?",
+        re.MULTILINE,
+    )
+    new_text, count = pattern.subn("", text, count=1)
+    if count != 1:
+        raise SystemExit(f"Could not find a source block for selector '{selector}' to remove.")
+    return new_text
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("recipe", help="Path to a julia-forge recipe.yaml")
@@ -127,6 +141,7 @@ def main():
     versions_data = fetch_json(f"{server}/bin/versions.json")
 
     resolved = {}
+    removed = set()
     for selector, triplet in PLATFORM_TRIPLETS.items():
         if f"- if: {selector}\n" not in text:
             continue
@@ -135,10 +150,11 @@ def main():
             if selector in OPTIONAL_SELECTORS:
                 print(
                     f"{args.recipe}: no '{triplet}' tar.gz archive found for Julia "
-                    f"{version} (selector '{selector}'); leaving this Tier 3 "
-                    f"platform's source block unchanged.",
+                    f"{version} (selector '{selector}'); removing this Tier 3 "
+                    f"platform's source block.",
                     file=sys.stderr,
                 )
+                removed.add(selector)
                 continue
             raise SystemExit(
                 f"{args.recipe}: no '{triplet}' tar.gz archive found for Julia "
@@ -151,6 +167,8 @@ def main():
     new_text = update_version(text, version)
     for selector, file in resolved.items():
         new_text = update_source_block(new_text, selector, file["url"], file["sha256"])
+    for selector in removed:
+        new_text = remove_source_block(new_text, selector)
 
     with open(args.recipe, "w", encoding="utf-8") as f:
         f.write(new_text)
