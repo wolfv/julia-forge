@@ -71,22 +71,6 @@ available to the solver.
 Packages are currently built for `linux-64`, `linux-aarch64`, `osx-arm64`,
 and `win-64`.
 
-### Precompiled Julia application example
-
-This repository also contains `julia-forge-example`, a small Julia command-line
-application compiled into a native sysimage with PackageCompiler.jl. It shows
-how Julia software can be distributed through conda without bundling a second
-Julia runtime:
-
-```shell
-pixi add julia-forge-example
-pixi run julia-forge-example conda
-```
-
-The application package depends on the exact compatible `julia` build and its
-launcher selects the packaged sysimage automatically. Its source and recipe
-are in [`julia-forge-example/`](julia-forge-example/).
-
 ## Updating recipes
 
 ```
