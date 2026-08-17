@@ -33,6 +33,11 @@ PLATFORM_TRIPLETS = {
 # are platform-independent, and every channel is guaranteed present here.
 REFERENCE_TARGET = "x86_64-unknown-linux-gnu"
 
+# Tier 3 platforms: upstream doesn't reliably publish a build for every
+# point release, so a missing archive here is not fatal -- the selector's
+# existing source block is left untouched instead of aborting the run.
+OPTIONAL_SELECTORS = {"linux and ppc64le"}
+
 
 def fetch(url):
     with urllib.request.urlopen(url, timeout=30) as resp:
@@ -127,6 +132,14 @@ def main():
             continue
         file = find_platform_file(versions_data, version, triplet)
         if file is None:
+            if selector in OPTIONAL_SELECTORS:
+                print(
+                    f"{args.recipe}: no '{triplet}' tar.gz archive found for Julia "
+                    f"{version} (selector '{selector}'); leaving this Tier 3 "
+                    f"platform's source block unchanged.",
+                    file=sys.stderr,
+                )
+                continue
             raise SystemExit(
                 f"{args.recipe}: no '{triplet}' tar.gz archive found for Julia "
                 f"{version} (selector '{selector}'). Refusing to update any "
