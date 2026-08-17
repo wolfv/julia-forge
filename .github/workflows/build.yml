@@ -69,6 +69,16 @@ jobs:
           -c conda-forge -c https://prefix.dev/julia-forge \
           --output-dir output-lts
 
+    - name: Build precompiled Julia example application
+      shell: bash
+      env:
+        TARGET_PLATFORM: ${{ matrix.target }}
+      run: |
+        rattler-build build --recipe-dir julia-forge-example \
+          --skip-existing=all --target-platform=$TARGET_PLATFORM \
+          -c https://prefix.dev/julia-forge -c conda-forge \
+          --output-dir output-example
+
     - name: Upload release packages
       shell: bash
       # do not upload on PR; allow manual re-trigger via workflow_dispatch
@@ -80,6 +90,17 @@ jobs:
         shopt -s nullglob
         exit_code=0
         for file in output-release/**/*.conda; do
+          rattler-build upload prefix -c julia-forge "$file" || exit_code=1
+        done
+        exit $exit_code
+
+    - name: Upload example application
+      shell: bash
+      if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+      run: |
+        shopt -s nullglob
+        exit_code=0
+        for file in output-example/**/*.conda; do
           rattler-build upload prefix -c julia-forge "$file" || exit_code=1
         done
         exit $exit_code
