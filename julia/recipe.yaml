@@ -1,5 +1,5 @@
 context:
-  version: 1.13.0
+  version: 1.13.1
 
 package:
   name: julia
@@ -8,24 +8,24 @@ package:
 source:
   - if: osx and arm64
     then:
-      - url: https://julialang-s3.julialang.org/bin/mac/aarch64/1.13/julia-1.13.0-macaarch64.tar.gz
-        sha256: c8546ad39de9df9edd74b8104066fb23be0ece60890bb2dbfffadd24e73ba2c2
+      - url: https://julialang-s3.julialang.org/bin/mac/aarch64/1.13/julia-1.13.1-macaarch64.tar.gz
+        sha256: a3e0259d4777c2b776c2cba134d5b6c6c124048dcb913f8881517892c49a0f7f
   - if: osx and x86_64
     then:
-      - url: https://julialang-s3.julialang.org/bin/mac/x64/1.13/julia-1.13.0-mac64.tar.gz
-        sha256: 409fb6bbf34d1068a1292a6c1ffaa2e3f26356a9b3187cc2eec2c5669a55a138
+      - url: https://julialang-s3.julialang.org/bin/mac/x64/1.13/julia-1.13.1-mac64.tar.gz
+        sha256: 3e1930346b14443d9b7a63a0290158c030364efcfc352c9c01e9ddd64f03307d
   - if: linux and aarch64
     then:
-      - url: https://julialang-s3.julialang.org/bin/linux/aarch64/1.13/julia-1.13.0-linux-aarch64.tar.gz
-        sha256: 6cd4a3e4baa2dc5f55638c28e9835fc294f41c78ada4a740dc408436778ab8b4
+      - url: https://julialang-s3.julialang.org/bin/linux/aarch64/1.13/julia-1.13.1-linux-aarch64.tar.gz
+        sha256: 78341862e24734ea1c2fa8795183c52627c23a99aba5aa1d0ec840edecec5ce0
   - if: linux and x86_64
     then:
-      - url: https://julialang-s3.julialang.org/bin/linux/x64/1.13/julia-1.13.0-linux-x86_64.tar.gz
-        sha256: 8975da61c128a5e5ded3e719e868da8c8781deb7ad7913d37fb99be02a81904b
+      - url: https://julialang-s3.julialang.org/bin/linux/x64/1.13/julia-1.13.1-linux-x86_64.tar.gz
+        sha256: 0f2e18c8dea60a2c8711d089cd9612f7a8df394b89e5208096fe5867647e0908
   - if: win and x86_64
     then:
-      - url: https://julialang-s3.julialang.org/bin/winnt/x64/1.13/julia-1.13.0-win64.tar.gz
-        sha256: 1c7a9e1455ed2ca204a797b0677040585977a9e62a3ec138118245058fed8580
+      - url: https://julialang-s3.julialang.org/bin/winnt/x64/1.13/julia-1.13.1-win64.tar.gz
+        sha256: 06d950b97fc99b518d11b0f53c0172bdb762a9309c8bfc8210e50cb47c83af22
 
 build:
   script:
