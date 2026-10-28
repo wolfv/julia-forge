@@ -1,0 +1,46 @@
+context:
+  version: 0.1.0
+  julia_version: 1.12.6
+
+package:
+  name: julia-forge-example
+  version: ${{ version }}
+
+source:
+  - path: .
+
+build:
+  number: 0
+  script:
+    - if: unix
+      then:
+        - julia --startup-file=no --project=compiler -e 'using Pkg; Pkg.instantiate()'
+        - julia --startup-file=no --project=compiler build.jl "$PREFIX"
+    - if: win
+      then:
+        - julia --startup-file=no --project=compiler -e "using Pkg; Pkg.instantiate()"
+        - julia --startup-file=no --project=compiler build.jl "%PREFIX%"
+  dynamic_linking:
+    binary_relocation: false
+
+requirements:
+  host:
+    - julia ==${{ julia_version }}
+  run:
+    # PackageCompiler sysimages are tied to the Julia patch version that built them.
+    - julia ==${{ julia_version }}
+
+tests:
+  - script:
+      - julia-forge-example --help
+      - julia-forge-example conda
+
+about:
+  homepage: https://github.com/wolfv/julia-forge
+  license: MIT
+  license_file: LICENSE
+  summary: Example of a Julia application shipped as a precompiled conda package
+  description: |
+    A small Julia command-line application compiled into a native Julia sysimage
+    with PackageCompiler.jl. The package uses the julia executable from the
+    julia-forge conda package rather than bundling a second Julia runtime.
