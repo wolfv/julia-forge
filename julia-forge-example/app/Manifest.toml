@@ -1,0 +1,10 @@
+# This file is machine-generated - editing it directly is not advised
+
+julia_version = "1.12.6"
+manifest_format = "2.0"
+project_hash = "b85b3678968d72a5ef094794e7dbbf14b6385b65"
+
+[[deps.JuliaForgeExample]]
+path = "."
+uuid = "acb05e88-9425-4acf-9b3f-d6a3e7772738"
+version = "0.1.0"

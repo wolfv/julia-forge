@@ -1,0 +1,7 @@
+name = "JuliaForgeExample"
+uuid = "acb05e88-9425-4acf-9b3f-d6a3e7772738"
+authors = ["julia-forge contributors"]
+version = "0.1.0"
+
+[compat]
+julia = "1.12"
