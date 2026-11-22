@@ -1,5 +1,5 @@
 context:
-  version: 1.10.13
+  version: 1.10.14
 
 package:
   name: julia
@@ -8,24 +8,24 @@ package:
 source:
   - if: osx and arm64
     then:
-      - url: https://julialang-s3.julialang.org/bin/mac/aarch64/1.10/julia-1.10.13-macaarch64.tar.gz
-        sha256: c93af6e5fa5def588a3d441156c2dc721b7621edaaea78e7ef7197daaadca560
+      - url: https://julialang-s3.julialang.org/bin/mac/aarch64/1.10/julia-1.10.14-macaarch64.tar.gz
+        sha256: 8af0c58233c056faa4ea220f335e3c9776b2d5b41957d82c1718e41c45a655d5
   - if: osx and x86_64
     then:
-      - url: https://julialang-s3.julialang.org/bin/mac/x64/1.10/julia-1.10.13-mac64.tar.gz
-        sha256: 4b3576e0b15b3ba6baa8b3574948af6045c9fa8cdac593e7b3bae68f0553574a
+      - url: https://julialang-s3.julialang.org/bin/mac/x64/1.10/julia-1.10.14-mac64.tar.gz
+        sha256: 8cc328f0e10762cd0534f519b2b47cd7dc116963208e2838c85589e248092865
   - if: linux and aarch64
     then:
-      - url: https://julialang-s3.julialang.org/bin/linux/aarch64/1.10/julia-1.10.13-linux-aarch64.tar.gz
-        sha256: f21192227b84236803e64e1fe2434c4c92975e3ce5a0cc28edfa50fbbcf1d748
+      - url: https://julialang-s3.julialang.org/bin/linux/aarch64/1.10/julia-1.10.14-linux-aarch64.tar.gz
+        sha256: 7bdd277c5c4a6069a35f303b0944e374908ccc9ff4cfb5df1478a047120264a8
   - if: linux and x86_64
     then:
-      - url: https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-1.10.13-linux-x86_64.tar.gz
-        sha256: f2bfa080db29b50a9bf250f69e9acdcfd8b7c49409dee5e55588f986706fb8bd
+      - url: https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-1.10.14-linux-x86_64.tar.gz
+        sha256: 6fd79bad660a4e34205da931bdd3afc6d86613a8189b76acecb26e6f06a67386
   - if: win and x86_64
     then:
-      - url: https://julialang-s3.julialang.org/bin/winnt/x64/1.10/julia-1.10.13-win64.tar.gz
-        sha256: 0534389961e73f7894e29ff7e6237f30ef33351fb76a24e1076f07cf6fbaaa91
+      - url: https://julialang-s3.julialang.org/bin/winnt/x64/1.10/julia-1.10.14-win64.tar.gz
+        sha256: 9720389885b57675f34084ae5049250769d5d6ac020fdff4979dcb5b7a4265f7
 
 build:
   script:
